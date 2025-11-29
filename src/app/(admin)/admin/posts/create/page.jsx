@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import PostForm from "@/components/ui/admin/PostForm";
 import { apiRequest } from "@/lib/api";
