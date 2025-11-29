@@ -1,4 +1,3 @@
-screenX
 
 const page = () => {
   return (
