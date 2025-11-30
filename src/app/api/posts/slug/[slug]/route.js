@@ -4,8 +4,6 @@ import Post from "@/models/Post";
 export async function GET(req, { params }) {
   try {
     await connectDB();
-    console.clear()
-    console.log(params)
 
     const { slug } = await params;
     if (!slug)

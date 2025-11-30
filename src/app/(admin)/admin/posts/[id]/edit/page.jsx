@@ -12,8 +12,6 @@ export default function EditPostPage() {
   const router = useRouter();
   const [post, setPost] = useState(null);
 
-  console.clear()
-  console.log(id)
 
   useEffect(() => {
     let mounted = true;
