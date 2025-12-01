@@ -19,6 +19,7 @@
     "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
+    "dompurify": "^3.3.0",
     "jodit-react": "^5.2.38",
     "jose": "^6.1.2",
     "js-cookie": "^3.0.5",

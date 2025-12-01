@@ -46,7 +46,11 @@ export async function PUT(req, { params }) {
     if (body.content) {
       body.content = sanitizeHtml(body.content, {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat([ "img", "h1", "h2", "span" ]),
-        allowedAttributes: { a: ["href", "name", "target"], img: ["src", "alt", "width", "height"] },
+        allowedAttributes: {
+          a: ["href", "name", "target"],
+          img: ["src", "alt", "width", "height"],
+          "*": ["class", "style"] // allow class & style for all tags
+        },
       });
     }
 

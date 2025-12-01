@@ -145,7 +145,11 @@ export async function POST(req) {
     // Sanitize content to prevent XSS (we still store HTML but sanitized)
     const cleanContent = sanitizeHtml(body.content, {
       allowedTags: sanitizeHtml.defaults.allowedTags.concat([ "img", "h1", "h2", "span" ]),
-      allowedAttributes: { a: ["href", "name", "target"], img: ["src", "alt", "width", "height"] },
+        allowedAttributes: {
+          a: ["href", "name", "target"],
+          img: ["src", "alt", "width", "height"],
+          "*": ["class", "style"] // allow class & style for all tags
+        },
     });
 
     // Validate categories array

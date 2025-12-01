@@ -150,6 +150,8 @@ export default function PostForm({ initialData = {}, onSubmit }) {
       "align","font","fontsize","brush",
       "paragraph","image","link","source"
     ],
+      allowClasses: true,             // ✅ Allow class attributes
+      allowedAttributes: ["class"], 
   };
 
   useEffect(() => {
