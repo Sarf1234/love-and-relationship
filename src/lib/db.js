@@ -1,24 +1,39 @@
 import mongoose from "mongoose";
 
-let isConnected = false; // Global connection flag
+const MONGODB_URI = process.env.MONGODB_URI;
 
-export const connectDB = async () => {
-  if (isConnected) {
-    console.log("🟢 MongoDB already connected (cached)");
-    return;
+if (!MONGODB_URI) {
+  throw new Error("❌ MONGODB_URI not defined");
+}
+
+// global cache (important for Next.js / serverless)
+let cached = globalThis.mongoose;
+
+if (!cached) {
+  cached = globalThis.mongoose = {
+    conn: null,
+    promise: null,
+  };
+}
+
+export async function connectDB() {
+  if (cached.conn) {
+    return cached.conn;
   }
 
-  if (!process.env.MONGODB_URI) {
-    throw new Error("❌ MONGODB_URI not found in environment variables");
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URI, {
+      bufferCommands: false,
+    });
   }
 
   try {
-    const db = await mongoose.connect(process.env.MONGODB_URI);
-    isConnected = db.connections[0].readyState === 1;
-
-    console.log("✅ MongoDB connected successfully");
-  } catch (error) {
-    console.error("❌ MongoDB connection error:", error);
-    throw error;
+    cached.conn = await cached.promise;
+    console.log("✅ MongoDB connected");
+    return cached.conn;
+  } catch (err) {
+    cached.promise = null;
+    console.error("❌ MongoDB connection failed", err);
+    throw err;
   }
-};
+}
